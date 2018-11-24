@@ -1,24 +1,25 @@
 import {Service} from "typedi";
 import {NotFoundError} from "routing-controllers";
 
+import {MoviesInstance} from '../models/db/MoviesInstance'
+import {Movie} from '../types/movie'
+
 
 @Service()
 export class LibraryRepository {
-    private library: Array<any> = [{
-        id: 1,
-        name: 'asd'
-    }];
 
-    public getAll(): any[] {
-        return this.library;
+    public async getAll(): Promise<Movie[]> {
+        return await MoviesInstance.findAll();
     }
 
-    public createNewMovie(movie: any): void {
-        this.library.push(movie);
+    public async createNewMovie(movie: Movie): Promise<void> {
+        await MoviesInstance.create<MoviesInstance>(movie);
     }
 
-    public getMovie(movieId: number): any {
-        let result = this.library.find(movie => movie.id === movieId);
+    public async getMovie(movieId: number): Promise<Movie> {
+        let result = await MoviesInstance.findOne({
+            where: { id: movieId }
+        });
 
         if (!result) {
             throw new NotFoundError("Movie was not found");
@@ -27,16 +28,13 @@ export class LibraryRepository {
         return result;
     }
 
-    public editMovie(movieId: number, movieData: any): void {
-        this.library.forEach((movie) => {
-            if (movie.id === movieId) {
-                movie = movieData;
-                return;
-            }
-        });
+    public async editMovie(movieData: Movie): Promise<void> {
+        await MoviesInstance.insertOrUpdate(movieData);
     }
 
-    public deleteMovie(movieId: number): void {
-        this.library = this.library.filter(x => x.id !== movieId);
+    public async deleteMovie(movieId: number): Promise<void> {
+        await MoviesInstance.destroy({
+            where: { id: movieId }
+        });
     }
 }

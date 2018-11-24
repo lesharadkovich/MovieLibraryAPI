@@ -15,7 +15,7 @@ The apps nodeJS backend code. Using the following tech stack:
 
 ### atlassian_instance
 
-This table (see models/AtlassianInstance.ts) will contain the all the instances that have installed the add-on. It will be popuplated by the lifecycle hook in the LibraryController.ts already have this table in our production database and will be integrating it with the new app.
+This table (see models/MoviesInstance.tsill contain the all the instances that have installed the add-on. It will be popuplated by the lifecycle hook in the LibraryController.ts already have this table in our production database and will be integrating it with the new app.
 
 ### teams_incident_assignment
 

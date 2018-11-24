@@ -9,6 +9,7 @@ import {
 } from "routing-controllers";
 
 import { LibraryRepository } from '../repositories/LibraryRepository'
+import {Movie} from '../types/movie'
 
 @Controller("/movie")
 export class MovieController {
@@ -24,8 +25,9 @@ export class MovieController {
 
     @Post("/:id")
     @OnUndefined(204)
-    async editMovie(@Param("id") id: number, @Body() newMovieData: any) {
-        return this.libraryRepository.editMovie(id, newMovieData);
+    async editMovie(@Param("id") id: number, @Body() newMovieData: Movie) {
+        newMovieData.id = id;
+        return this.libraryRepository.editMovie(newMovieData);
     }
 
     @Delete("/:id")

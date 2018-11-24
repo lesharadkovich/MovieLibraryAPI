@@ -34,7 +34,8 @@ let MovieController = class MovieController {
     }
     editMovie(id, newMovieData) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.libraryRepository.editMovie(id, newMovieData);
+            newMovieData.id = id;
+            return this.libraryRepository.editMovie(newMovieData);
         });
     }
     deleteMovie(id) {

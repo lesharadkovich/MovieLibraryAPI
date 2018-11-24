@@ -95,4 +95,4 @@ AtlassianInstance = __decorate([
     })
 ], AtlassianInstance);
 exports.AtlassianInstance = AtlassianInstance;
-//# sourceMappingURL=AtlassianInstance.js.map
+//# sourceMappingURL=MoviesInstance.js.map
