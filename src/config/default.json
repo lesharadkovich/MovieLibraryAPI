@@ -1,0 +1,19 @@
+{
+    "database": {
+        "database": "backend_v3",
+        "dialect": "postgres",
+        "username": "postgres",
+        "password": "12345",
+        "host": "localhost",
+        "port": 5432
+    },
+    "baseUrl": "https://d168fde8.ngrok.io",
+    "microsoftApp": {
+        "clientId": "0195d20e-0db1-4773-98f3-36077b37b302",
+        "clientSecret": "iyccpbFNXTB825-~%23hSB51~"
+    },
+    "bot": {
+        "microsoftAppId": "d872d6d9-b4d1-4295-9b00-f2c76f6cd3d6",
+        "microsoftAppPassword": "qpsrsPE2717#ufYUKOY6~~#"
+    }
+}
