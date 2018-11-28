@@ -28,5 +28,5 @@ export class MoviesInstance extends Model<MoviesInstance> {
     description: string;
 
     @Column
-    imageUrl: string;
+    imageurl: string;
 }
