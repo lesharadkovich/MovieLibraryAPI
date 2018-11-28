@@ -8,7 +8,7 @@ import {Movie} from '../types/movie'
 @Service()
 export class LibraryRepository {
 
-    public async getAll(): Promise<Movie[]> {
+    public async getAll(): Promise<MoviesInstance[]> {
         return await MoviesInstance.findAll();
     }
 
@@ -25,7 +25,7 @@ export class LibraryRepository {
             throw new NotFoundError("Movie was not found");
         }
 
-        return result;
+        return result.toJSON();
     }
 
     public async editMovie(movieData: Movie): Promise<void> {

@@ -36,7 +36,7 @@ let LibraryRepository = class LibraryRepository {
             if (!result) {
                 throw new routing_controllers_1.NotFoundError("Movie was not found");
             }
-            return result;
+            return result.toJSON();
         });
     }
     editMovie(movieData) {

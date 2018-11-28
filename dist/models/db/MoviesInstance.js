@@ -33,7 +33,7 @@ __decorate([
 __decorate([
     sequelize_typescript_1.Column,
     __metadata("design:type", String)
-], MoviesInstance.prototype, "imageUrl", void 0);
+], MoviesInstance.prototype, "imageurl", void 0);
 MoviesInstance = __decorate([
     sequelize_typescript_1.Table({
         tableName: 'movies',
