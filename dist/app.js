@@ -30,7 +30,8 @@ let dbConfig = {
 dbConfig.modelPaths = [__dirname + '/models/db'];
 new sequelize_typescript_1.Sequelize(dbConfig);
 const app = express();
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 // Create expressJS server routes based on controllers
 routing_controllers_1.useExpressServer(app, {
     controllers: [__dirname + "/controllers/*.js"],

@@ -37,7 +37,8 @@ new Sequelize(dbConfig);
 
 
 const app = express();
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 // Create expressJS server routes based on controllers
 useExpressServer(app, {

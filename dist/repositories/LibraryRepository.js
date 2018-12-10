@@ -20,7 +20,7 @@ const MoviesInstance_1 = require("../models/db/MoviesInstance");
 let LibraryRepository = class LibraryRepository {
     getAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield MoviesInstance_1.MoviesInstance.findAll();
+            return MoviesInstance_1.MoviesInstance.findAll();
         });
     }
     createNewMovie(movie) {

@@ -22,6 +22,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const routing_controllers_1 = require("routing-controllers");
 const LibraryRepository_1 = require("../repositories/LibraryRepository");
+// import {Movie} from '../types/movie'
 let LibraryController = class LibraryController {
     constructor(libraryRepository) {
         this.libraryRepository = libraryRepository;
@@ -29,30 +30,33 @@ let LibraryController = class LibraryController {
     // Get all
     getEntireLibrary() {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.libraryRepository.getAll();
+            const result = yield this.libraryRepository.getAll();
+            return JSON.stringify(result);
         });
     }
     // Create new movie
-    createNewMovie(newMovieData) {
+    createNewMovie(req, newMovieData) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.libraryRepository.createNewMovie(newMovieData);
+            console.log(req);
+            yield this.libraryRepository.createNewMovie(newMovieData);
+            return {
+                success: true
+            };
         });
     }
 };
 __decorate([
     routing_controllers_1.Get("/"),
-    routing_controllers_1.ContentType('application/json'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], LibraryController.prototype, "getEntireLibrary", null);
 __decorate([
     routing_controllers_1.Post("/"),
-    routing_controllers_1.ContentType('application/json'),
     routing_controllers_1.OnUndefined(201),
-    __param(0, routing_controllers_1.Body()),
+    __param(0, routing_controllers_1.Req()), __param(1, routing_controllers_1.Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], LibraryController.prototype, "createNewMovie", null);
 LibraryController = __decorate([

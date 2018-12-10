@@ -8,8 +8,8 @@ import {Movie} from '../types/movie'
 @Service()
 export class LibraryRepository {
 
-    public async getAll(): Promise<MoviesInstance[]> {
-        return await MoviesInstance.findAll();
+    public async getAll(): Promise<any> {
+        return MoviesInstance.findAll();
     }
 
     public async createNewMovie(movie: Movie): Promise<void> {
