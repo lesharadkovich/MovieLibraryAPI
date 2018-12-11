@@ -3,5 +3,5 @@ export interface Movie {
     name: string;
     director: string;
     description: string;
-    imageUrl: string;
+    imageurl: string;
 }

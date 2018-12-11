@@ -21,57 +21,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const routing_controllers_1 = require("routing-controllers");
-const LibraryRepository_1 = require("../repositories/LibraryRepository");
-const formData = require("express-form-data");
-// const multer  = require('multer');
-// const upload = multer({ dest: '../uploads/' });
-const options = {
-    uploadDir: '../../uploads',
-    autoClean: true
-};
+const path = require("path");
+const util_1 = require("util");
 let LibraryController = class LibraryController {
-    constructor(libraryRepository) {
-        this.libraryRepository = libraryRepository;
-    }
-    // Get all
-    getEntireLibrary() {
+    getEntireLibrary(imagePath, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.libraryRepository.getAll();
-            return JSON.stringify(result);
-        });
-    }
-    // Create new movie
-    createNewMovie(newMovieData, req) {
-        return __awaiter(this, void 0, void 0, function* () {
-            console.log(req);
-            // newMovieData.imageurl = file.filename;
-            yield this.libraryRepository.createNewMovie(newMovieData);
-            return {
-                success: true
-            };
+            const fileName = path.resolve(__dirname, '../../uploads', imagePath);
+            yield util_1.promisify(response.sendFile.bind(response))(fileName);
+            return response;
         });
     }
 };
 __decorate([
-    routing_controllers_1.Get("/"),
+    routing_controllers_1.Get("/:imagePath"),
+    __param(0, routing_controllers_1.Param("imagePath")), __param(1, routing_controllers_1.Res()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], LibraryController.prototype, "getEntireLibrary", null);
-__decorate([
-    routing_controllers_1.Post("/")
-    // @UseBefore(upload.single('image'))
-    ,
-    routing_controllers_1.UseBefore(formData.parse(options)),
-    routing_controllers_1.OnUndefined(201),
-    __param(0, routing_controllers_1.Body()), __param(1, routing_controllers_1.Req()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", Promise)
-], LibraryController.prototype, "createNewMovie", null);
 LibraryController = __decorate([
-    routing_controllers_1.Controller("/library"),
-    __metadata("design:paramtypes", [LibraryRepository_1.LibraryRepository])
+    routing_controllers_1.Controller("/uploads")
 ], LibraryController);
 exports.LibraryController = LibraryController;
-//# sourceMappingURL=LibraryController.js.map
+//# sourceMappingURL=ImageController.js.map
