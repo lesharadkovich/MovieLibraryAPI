@@ -2,14 +2,16 @@ import {Body, Controller, Get, OnUndefined, Post, Req, UseBefore} from "routing-
 import { LibraryRepository } from '../repositories/LibraryRepository'
 
 import {Movie} from '../types/movie'
-const formData = require("express-form-data");
-// const multer  = require('multer');
-// const upload = multer({ dest: '../uploads/' });
+const multer  = require('multer');
+const storage = multer.diskStorage({
+    destination: '../uploads/',
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + '.jpg')
+    }
+});
 
-const options = {
-    uploadDir: '../../uploads',
-    autoClean: true
-};
+const upload = multer({ storage: storage });
+
 
 @Controller("/library")
 export class LibraryController {
@@ -26,12 +28,10 @@ export class LibraryController {
 
     // Create new movie
     @Post("/")
-    // @UseBefore(upload.single('image'))
-    @UseBefore(formData.parse(options))
+    @UseBefore(upload.any())
     @OnUndefined(201)
     async createNewMovie(@Body() newMovieData: Movie, @Req() req: any) {
-        console.log(req);
-        // newMovieData.imageurl = file.filename;
+        newMovieData.imageurl = 'uploads/' + req.files[0].filename;
         await this.libraryRepository.createNewMovie(newMovieData);
         return {
             success: true

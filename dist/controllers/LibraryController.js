@@ -22,13 +22,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const routing_controllers_1 = require("routing-controllers");
 const LibraryRepository_1 = require("../repositories/LibraryRepository");
-const formData = require("express-form-data");
-// const multer  = require('multer');
-// const upload = multer({ dest: '../uploads/' });
-const options = {
-    uploadDir: '../../uploads',
-    autoClean: true
-};
+// const formData = require("express-form-data");
+// const formidableMiddleware = require('express-formidable');
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: '../uploads/',
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + '.jpg');
+    }
+});
+const upload = multer({ storage: storage });
+// const options = {
+//     uploadDir: '../../uploads',
+//     autoClean: true
+// };
 let LibraryController = class LibraryController {
     constructor(libraryRepository) {
         this.libraryRepository = libraryRepository;
@@ -43,8 +50,7 @@ let LibraryController = class LibraryController {
     // Create new movie
     createNewMovie(newMovieData, req) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(req);
-            // newMovieData.imageurl = file.filename;
+            newMovieData.imageurl = 'uploads/' + req.files[0].filename;
             yield this.libraryRepository.createNewMovie(newMovieData);
             return {
                 success: true
@@ -59,10 +65,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], LibraryController.prototype, "getEntireLibrary", null);
 __decorate([
-    routing_controllers_1.Post("/")
-    // @UseBefore(upload.single('image'))
+    routing_controllers_1.Post("/"),
+    routing_controllers_1.UseBefore(upload.any())
+    // @UseBefore(formidableMiddleware())
     ,
-    routing_controllers_1.UseBefore(formData.parse(options)),
     routing_controllers_1.OnUndefined(201),
     __param(0, routing_controllers_1.Body()), __param(1, routing_controllers_1.Req()),
     __metadata("design:type", Function),
