@@ -31,10 +31,10 @@ export class LibraryController {
     @UseBefore(upload.any())
     @OnUndefined(201)
     async createNewMovie(@Body() newMovieData: Movie, @Req() req: any) {
-        newMovieData.imageurl = 'uploads/' + req.files[0].filename;
+        if (!newMovieData.imageurl && req.files[0].filename) {
+            newMovieData.imageurl = 'uploads/' + req.files[0].filename;
+        }
+
         await this.libraryRepository.createNewMovie(newMovieData);
-        return {
-            success: true
-        };
     }
 }
